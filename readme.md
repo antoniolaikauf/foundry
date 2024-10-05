@@ -21,3 +21,6 @@ ignore them in the `.gitignore` file, or run this command again with the `--no-c
 
 If none of the previous steps worked, please open an issue at:
 https://github.com/foundry-rs/foundry/issues/new/choose
+
+
+in **src** si mettono gli smart contract 
