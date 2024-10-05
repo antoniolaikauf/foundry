@@ -24,3 +24,8 @@ https://github.com/foundry-rs/foundry/issues/new/choose
 
 
 in **src** si mettono gli smart contract 
+
+per compiler il nostro codice si usa **forge build o forge compile**
+
+foundry ha anche la virtual machine per testare il codice e si chiama **anvil**, facendo il comando **anvil** compariranno dei fake account con delle
+fake private key 
