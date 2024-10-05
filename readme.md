@@ -29,3 +29,6 @@ per compiler il nostro codice si usa **forge build o forge compile**
 
 foundry ha anche la virtual machine per testare il codice e si chiama **anvil**, facendo il comando **anvil** compariranno dei fake account con delle
 fake private key 
+
+per mettere un contratto sulla rete si usa **forge create 'nome contratto' --interactive**
+dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet 
