@@ -64,5 +64,28 @@ questi sarebbero i dati inviati alla blockchain
 il from dovrebbe combaciare con l'address della private key che abbiamo inserito 
 il nonce si trova nell'account e conta le transazioni 
 
+## interazione con contract 
+per interagire con lo smart contract tramite il prompt si scrive 
+'cast send address nomefunzione argomento url private-key'
+es cast send 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 'store(uint256)' 123 --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+
+invece per leggere dalla blockchain 
+cast call address nome_funzione 
+es. cast call 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 'retrive()'
+questo ritornerà un parametro in hex che si dovra convertire 
+cast --to-base risultato in hex dec (dec stà per decimale)
+es.cast --to-base 0x000000000000000000000000000000000000000000000000000000000000007b dec
 ## sicurezza 
 con soldi non usare il file .env con dentro la chiave privata dell'account 
+
+0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+
+## foundry-sksync
+- foundry fork 
+- git clone https://github.com/matter-labs/foundry-zksync
+- cd foundry-zksync
+- ./install-foundry-zksync
+- foundryup-zksync (installa l'ultima versione del fork di foundry zksync)
+- se si fa forge --version ora si avrà un altra versione di foundry 
+
+ps se si vuolesse tornare alla versione vanilla foundry basta fare foundryup 
