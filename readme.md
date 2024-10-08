@@ -32,3 +32,15 @@ fake private key
 
 per mettere un contratto sulla rete si usa **forge create 'nome contratto' --interactive**
 dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet 
+
+
+## private key 
+'cast wallet import defaul_key  --interactive' incripta la tua private key e ti fornirà un address 
+se si volesse vedere tutti i nomi delle primate key cast wallet list
+
+## keyword 
+- is : è per l'ereditarietà dei contratti es. contract A is B 
+
+## deploy contract 
+nel file script si crea il codice che fa il deploy del contratto, una volta creato si esegue il comando forge script script/nome_file
+e ritornerà un address che farà riferimento al nostro contratto e lo useremo per interagire con esso 
