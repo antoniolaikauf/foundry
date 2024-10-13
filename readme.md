@@ -26,6 +26,8 @@ ignore them in the `.gitignore` file, or run this command again with the `--no-c
 If none of the previous steps worked, please open an issue at:
 https://github.com/foundry-rs/foundry/issues/new/choose
 
+se non si crea la cartella lib usare questo comando ' git submodule add --force --name lib/forge-std https://github.com/foundry-rs/forge-std lib/forge-std '
+
 in **src** si mettono gli smart contract
 
 per compiler il nostro codice si usa **forge build o forge compile**
@@ -35,6 +37,8 @@ fake private key
 
 per mettere un contratto sulla rete si usa **forge create 'nome contratto' --interactive**
 dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet
+
+la cartella test serve per testare il tuo smartcontract comando forge test 
 
 ## private key
 
