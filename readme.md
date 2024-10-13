@@ -1,17 +1,21 @@
-framework foudry per eth 
+framework foudry per eth
+
 ## SCARICARE
+
 - ' curl -L https://foundry.paradigm.xyz | bash '
 
-## prerequisiti 
-rust compiler e cargo essendo che foundry è sviluppato in rust 
+## prerequisiti
+
+rust compiler e cargo essendo che foundry è sviluppato in rust
 
 [link documentazione](https://book.getfoundry.sh/getting-started/installation)
 
-## libreria 
-creazione libreria 
+## libreria
+
+creazione libreria
 **forge init**
 se da questo errore perchè il folder non è vuoto allora provare **forge init --force**
-Error: 
+Error:
 The target directory is a part of or on its own an already initialized git repository,
 and it requires clean working and staging areas, including no untracked files.
 
@@ -22,35 +26,36 @@ ignore them in the `.gitignore` file, or run this command again with the `--no-c
 If none of the previous steps worked, please open an issue at:
 https://github.com/foundry-rs/foundry/issues/new/choose
 
-
-in **src** si mettono gli smart contract 
+in **src** si mettono gli smart contract
 
 per compiler il nostro codice si usa **forge build o forge compile**
 
 foundry ha anche la virtual machine per testare il codice e si chiama **anvil**, facendo il comando **anvil** compariranno dei fake account con delle
-fake private key 
+fake private key
 
 per mettere un contratto sulla rete si usa **forge create 'nome contratto' --interactive**
-dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet 
+dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet
 
+## private key
 
-## private key 
-'cast wallet import defaul_key  --interactive' incripta la tua private key e ti fornirà un address 
+'cast wallet import defaul_key --interactive' incripta la tua private key e ti fornirà un address
 se si volesse vedere tutti i nomi delle primate key cast wallet list
 
-## keyword 
-- is : è per l'ereditarietà dei contratti es. contract A is B 
+## keyword
 
-## deploy contract 
+- is : è per l'ereditarietà dei contratti es. contract A is B
+
+## deploy contract
+per interagire/compilare il contratto su usa **forge**
 nel file script si crea il codice che fa il deploy del contratto, una volta creato si esegue il comando forge script script/nome_file
-e ritornerà un address che farà riferimento al nostro contratto e lo useremo per interagire con esso 
+e ritornerà un address che farà riferimento al nostro contratto e lo useremo per interagire con esso
 il contratto sarà su una blockchain anvil temporanea se invece si vuole deploiare il contratto sulla nostra blockchain anvil allora 'forge script script/deploy.s.sol --rpc-url http://localhost --broadcast --private-key una a caso di anvil'
-address ottenuto  '0x90193C961A926261B756D1E5bb255e67ff9498A1'
+address ottenuto '0x90193C961A926261B756D1E5bb255e67ff9498A1'
 
-una volta deploiato il contratto si creeranno altri file e dentro 'broadcast' 
+una volta deploiato il contratto si creeranno altri file e dentro 'broadcast'
 ci saranno dei json con dei dati:
 
-questi sarebbero i dati inviati alla blockchain 
+questi sarebbero i dati inviati alla blockchain
 
       "transaction": {
         "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -61,42 +66,48 @@ questi sarebbero i dati inviati alla blockchain
         "chainId": "0x7a69"
       },
 
-il from dovrebbe combaciare con l'address della private key che abbiamo inserito 
-il nonce si trova nell'account e conta le transazioni 
+il from dovrebbe combaciare con l'address della private key che abbiamo inserito
+il nonce si trova nell'account e conta le transazioni
 
-per deploiare questo contratto si avrebbe pagato 6.18 euro 
+per deploiare questo contratto si avrebbe pagato 6.18 euro il che per 30 linee di codice è fin troppo
+per questo molti preferiscono deploiare direttamente su layer2 (perchè più economici) invece di deploiare sulla blockchain
 
-## interazione con contract 
-per interagire con lo smart contract tramite il prompt si scrive 
+## interazione con contract
+per interagire con il contratto gia deploiato si usa **cast**
+per interagire con lo smart contract tramite il prompt si scrive
 'cast send address nomefunzione argomento url private-key'
 es cast send 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 'store(uint256)' 123 --rpc-url http://127.0.0.1:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 
-invece per leggere dalla blockchain 
-cast call address nome_funzione 
+invece per leggere dalla blockchain
+cast call address nome_funzione
 es. cast call 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 'retrive()'
-questo ritornerà un parametro in hex che si dovra convertire 
+questo ritornerà un parametro in hex che si dovra convertire
 cast --to-base risultato in hex dec (dec stà per decimale)
 es.cast --to-base 0x000000000000000000000000000000000000000000000000000000000000007b dec
-## sicurezza 
-con soldi non usare il file .env con dentro la chiave privata dell'account 
+
+## sicurezza
+
+con soldi non usare il file .env con dentro la chiave privata dell'account
 
 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
 
 ## foundry-sksync
-- foundry fork 
+
+- foundry fork
 - git clone https://github.com/matter-labs/foundry-zksync
 - cd foundry-zksync
 - ./install-foundry-zksync
 - foundryup-zksync (installa l'ultima versione del fork di foundry zksync)
-- se si fa forge --version ora si avrà un altra versione di foundry 
+- se si fa forge --version ora si avrà un altra versione di foundry
 
-ps se si vuolesse tornare alla versione vanilla foundry basta fare foundryup 
+ps se si vuolesse tornare alla versione vanilla foundry basta fare foundryup
 
 ## transazioni
-ci possono essere vari tipi di transazioni che dipendono da come hai deploiato il contratto 
-es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --legacy --broadcast 
 
-es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast 
+ci possono essere vari tipi di transazioni che dipendono da come hai deploiato il contratto
+es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --legacy --broadcast
 
-queste due saranno di tipo diverso e si può vederlo nei file dentro alla cartella broadcast 
-il type dei recives. Il tipo di default è quella  "type": "0x2",
+es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast
+
+queste due saranno di tipo diverso e si può vederlo nei file dentro alla cartella broadcast
+il type dei recives. Il tipo di default è quella "type": "0x2",
