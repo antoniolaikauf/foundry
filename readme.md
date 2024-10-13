@@ -64,6 +64,8 @@ questi sarebbero i dati inviati alla blockchain
 il from dovrebbe combaciare con l'address della private key che abbiamo inserito 
 il nonce si trova nell'account e conta le transazioni 
 
+per deploiare questo contratto si avrebbe pagato 6.18 euro 
+
 ## interazione con contract 
 per interagire con lo smart contract tramite il prompt si scrive 
 'cast send address nomefunzione argomento url private-key'
@@ -89,3 +91,12 @@ con soldi non usare il file .env con dentro la chiave privata dell'account
 - se si fa forge --version ora si avrà un altra versione di foundry 
 
 ps se si vuolesse tornare alla versione vanilla foundry basta fare foundryup 
+
+## transazioni
+ci possono essere vari tipi di transazioni che dipendono da come hai deploiato il contratto 
+es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --legacy --broadcast 
+
+es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast 
+
+queste due saranno di tipo diverso e si può vederlo nei file dentro alla cartella broadcast 
+il type dei recives. Il tipo di default è quella  "type": "0x2",
