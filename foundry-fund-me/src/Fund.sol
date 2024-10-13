@@ -11,7 +11,7 @@ import {PriceConverter} from "./PriceConverter.sol";
 
 error FundMe__NotOwner();
 
-contract fundme {
+contract Fundme {
     mapping(address => uint256) public address_to_amount_fund;
     address[] public funders;
     address public i_owners;
