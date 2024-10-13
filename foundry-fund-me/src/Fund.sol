@@ -7,11 +7,13 @@ pragma solidity ^0.8.28;
 // import {AggregatorV3Interface} from "./../lib/chainlink-brownie-contracts/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 // secondo modo con remapping in foundry.toml
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {MockV3Aggregator} from "@chainlink/contracts/src/v0.8/tests/MockV3Aggregator.sol";
 import {PriceConverter} from "./PriceConverter.sol";
 
 error FundMe__NotOwner();
 
 contract Fundme {
+    MockV3Aggregator mockV3Aggregator;
     mapping(address => uint256) public address_to_amount_fund;
     address[] public funders;
     address public i_owners;
@@ -24,7 +26,12 @@ contract Fundme {
     }
 
     // s_priceFeed = AggregatorV3Interface(priceFeed);
-    constructor() {
+    constructor(address priceFeed) {
         i_owners = msg.sender;
+        s_priceFeed = AggregatorV3Interface(priceFeed);
     }
-}
+
+    function getVersion() public view returns (uint256) {
+        return s_priceFeed.version();
+    }
+// }https://github.com/Cyfrin/foundry-fund-me-cu/blob/main/script/DeployFundMe.s.sol

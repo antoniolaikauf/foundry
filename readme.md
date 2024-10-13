@@ -39,7 +39,8 @@ per mettere un contratto sulla rete si usa **forge create 'nome contratto' --int
 dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet
 
 la cartella test serve per testare il tuo smartcontract comando forge test 
-le funzioni dentro al file test per testare il codice devono iniziare con test 
+le funzioni dentro al file test per testare il codice devono iniziare con test. Se si ha problemi quando si esegue forge test
+allora prima bisogna pulire la cache con forge clean e dopo fare il comando
 
 ## private key
 
