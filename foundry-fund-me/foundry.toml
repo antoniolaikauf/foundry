@@ -3,7 +3,7 @@ src = "src"
 out = "out"
 libs = ["lib"]
 remappings = [
-    # ogni volta che vede  @chainlink/contracts/ in verita sarebbe lib/chainlink-brownie-contracts/contracts/
+    # ogni volta che vede  @chainlink/contracts/ rimpiazzalo con lib/chainlink-brownie-contracts/contracts/
     '@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/',
 ]
 
