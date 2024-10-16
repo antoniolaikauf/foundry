@@ -10,6 +10,7 @@ contract FundMeTest is Test {
     Fundme fundme;
     function setUp() external {
         CounterScript counterScript = new CounterScript();
+        // prendi contratto da file script 
         fundme = counterScript.run();
     }
     // questa viene eseguita una volta eseguita setup ed esegue i controlli

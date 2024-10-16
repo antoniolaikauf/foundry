@@ -11,8 +11,7 @@ contract HelperConfig {
     NetConfig public realNetConfig;
 
     constructor() {
-        // block.chainId si riferisce all'attuale chainId
-        // perchè ogni rete ha il proprio chainId
+        // block.chainId si riferisce all'attuale chainId perchè ogni rete ha il proprio chainId
         if (block.chainid == 11155111) realNetConfig = getSepolia();
         else if (block.chainid == 1) realNetConfig = getETHChain();
     }
