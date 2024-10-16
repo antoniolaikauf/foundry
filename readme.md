@@ -42,8 +42,10 @@ le funzioni dentro al file test per testare il codice devono iniziare con test. 
 allora prima bisogna pulire la cache con forge clean e dopo fare il comando.
 
 se si volesse eseguire un test con una chain si usa 
-forge coverage --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHXQ2bxeXB9aMEp15 
-ovviamente bisogna iscriversi ad alchemy e selezionare la chain che si vuole 
+forge test --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHXQ2bxeXB9aMEp15 
+ovviamente bisogna iscriversi ad alchemy e selezionare la chain che si vuole.
+Se si volesse vedere delle statistiche allora eseguire forge coverage --fork-url https://eth-mainnet.g.alchemy.com/v2/cFw9OSeqq5kXo10sQL_WJG1kXnPNCTgP
+
 
 ## private key
 

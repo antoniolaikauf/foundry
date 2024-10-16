@@ -25,6 +25,7 @@ contract FundMeTest is Test {
 
     function testVersion() public view {
         uint256 version = fundme.getVersion();
-        assertEq(version, 4);
+        assertEq(version, 6);
+        //6 chain eth
     }
 }
