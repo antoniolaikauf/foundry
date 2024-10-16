@@ -32,15 +32,18 @@ in **src** si mettono gli smart contract
 
 per compiler il nostro codice si usa **forge build o forge compile**
 
-foundry ha anche la virtual machine per testare il codice e si chiama **anvil**, facendo il comando **anvil** compariranno dei fake account con delle
-fake private key
+foundry ha anche la virtual machine per testare il codice e si chiama **anvil**, facendo il comando **anvil** compariranno dei fake account con delle fake private key
 
 per mettere un contratto sulla rete si usa **forge create 'nome contratto' --interactive**
 dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet
 
 la cartella test serve per testare il tuo smartcontract comando forge test 
 le funzioni dentro al file test per testare il codice devono iniziare con test. Se si ha problemi quando si esegue forge test
-allora prima bisogna pulire la cache con forge clean e dopo fare il comando
+allora prima bisogna pulire la cache con forge clean e dopo fare il comando.
+
+se si volesse eseguire un test con una chain si usa 
+forge coverage --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHXQ2bxeXB9aMEp15 
+ovviamente bisogna iscriversi ad alchemy e selezionare la chain che si vuole 
 
 ## private key
 

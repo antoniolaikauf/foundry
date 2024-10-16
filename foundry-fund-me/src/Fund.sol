@@ -24,8 +24,7 @@ contract Fundme {
         if (msg.sender != i_owners) revert FundMe__NotOwner();
         _;
     }
-
-    // s_priceFeed = AggregatorV3Interface(priceFeed);
+    // se si mette un input allora alla creazione del contratto nello script bisognerebbe aggiungere un input
     constructor(address priceFeed) {
         i_owners = msg.sender;
         s_priceFeed = AggregatorV3Interface(priceFeed);
@@ -34,4 +33,4 @@ contract Fundme {
     function getVersion() public view returns (uint256) {
         return s_priceFeed.version();
     }
-// }https://github.com/Cyfrin/foundry-fund-me-cu/blob/main/script/DeployFundMe.s.sol
+} //https://github.com/Cyfrin/foundry-fund-me-cu/blob/main/script/DeployFundMe.s.sol
