@@ -17,6 +17,7 @@ contract HelperConfig is Script {
         // block.chainId si riferisce all'attuale chainId perchè ogni rete ha il proprio chainId
         if (block.chainid == 11155111) realNetConfig = getSepolia();
         else if (block.chainid == 1) realNetConfig = getETHChain();
+        else realNetConfig = anyChain();
     }
     // si mette memory perchè è un oggetto speciale
     function getSepolia() public pure returns (NetConfig memory) {
@@ -31,10 +32,10 @@ contract HelperConfig is Script {
         });
         return netconfig;
     }
-    // anvil non ha il proprio address da cui ottenere informazione
-    function anvilChain() public returns (NetConfig memory) {
+    // impostazione di una nostra chain 
+    function anyChain() public returns (NetConfig memory) {
         if (realNetConfig.priceFeed != address(0)) return realNetConfig;
-        vm.broadcast();
+        vm.startBroadcast();
         MockV3Aggregator mockPriceFeed = new MockV3Aggregator(DECIMAL, PRICE);
         vm.stopBroadcast();
         NetConfig memory netconfig = NetConfig({

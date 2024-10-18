@@ -9,6 +9,7 @@ contract CounterScript is Script {
     function run() public returns (Fundme) {
         HelperConfig helperConfig = new HelperConfig(); // quando si crea un contratto viene chiamato il contractor
         address PriceFeed = helperConfig.realNetConfig();
+        console.log(PriceFeed);
         vm.startBroadcast();
         // ottimizzazione crea il contratto e lo ritorna cosi che si può usare nel test
         Fundme fundme = new Fundme(PriceFeed);

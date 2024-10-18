@@ -37,15 +37,14 @@ foundry ha anche la virtual machine per testare il codice e si chiama **anvil**,
 per mettere un contratto sulla rete si usa **forge create 'nome contratto' --interactive**
 dopo ti chiederà la private key cosi che si per queste transazioni si usa quel wallet
 
-la cartella test serve per testare il tuo smartcontract comando forge test 
+la cartella test serve per testare il tuo smartcontract comando forge test
 le funzioni dentro al file test per testare il codice devono iniziare con test. Se si ha problemi quando si esegue forge test
 allora prima bisogna pulire la cache con forge clean e dopo fare il comando.
 
-se si volesse eseguire un test con una chain si usa 
-forge test --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHXQ2bxeXB9aMEp15 
+se si volesse eseguire un test con una chain si usa
+forge test --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHXQ2bxeXB9aMEp15
 ovviamente bisogna iscriversi ad alchemy e selezionare la chain che si vuole.
 Se si volesse vedere delle statistiche allora eseguire forge coverage --fork-url https://eth-mainnet.g.alchemy.com/v2/cFw9OSeqq5kXo10sQL_WJG1kXnPNCTgP
-
 
 ## private key
 
@@ -55,8 +54,10 @@ se si volesse vedere tutti i nomi delle primate key cast wallet list
 ## keyword
 
 - is : è per l'ereditarietà dei contratti es. contract A is B
+- msg.sender: è l'address o il ocntrato che ha inizializzato la funzione eseguita
 
 ## deploy contract
+
 per interagire/compilare il contratto su usa **forge**
 nel file script si crea il codice che fa il deploy del contratto, una volta creato si esegue il comando forge script script/nome_file
 e ritornerà un address che farà riferimento al nostro contratto e lo useremo per interagire con esso
@@ -84,6 +85,7 @@ per deploiare questo contratto si avrebbe pagato 6.18 euro il che per 30 linee d
 per questo molti preferiscono deploiare direttamente su layer2 (perchè più economici) invece di deploiare sulla blockchain
 
 ## interazione con contract
+
 per interagire con il contratto gia deploiato si usa **cast**
 per interagire con lo smart contract tramite il prompt si scrive
 'cast send address nomefunzione argomento url private-key'
