@@ -2,8 +2,11 @@
 pragma solidity ^0.8.28;
 
 import {Script, console} from "forge-std/Script.sol";
+import {MockV3Aggregator} from "../test/mocks/AggregatorV3Interface.sol";
 
 contract HelperConfig is Script {
+    uint8 DECIMAL = 8;
+    int256 PRICE = 2000e8;
     struct NetConfig {
         address priceFeed;
     }
@@ -30,7 +33,14 @@ contract HelperConfig is Script {
     }
     // anvil non ha il proprio address da cui ottenere informazione
     function anvilChain() public returns (NetConfig memory) {
+        if (realNetConfig.priceFeed != address(0)) return realNetConfig;
         vm.broadcast();
+        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(DECIMAL, PRICE);
         vm.stopBroadcast();
+        NetConfig memory netconfig = NetConfig({
+            priceFeed: address(mockPriceFeed)
+        });
+
+        return netconfig;
     }
 }
