@@ -58,8 +58,10 @@ se si volesse vedere tutti i nomi delle primate key cast wallet list
 
 ### key foundry
 
-- vm.expectRevert la linea seguente dovrebbe rinvertirsi, se questo accade il test passa, se la linea seguente non si rinverte allora il test non lo passa
-  (rinverte dare errore e ritornare allo stato/valori precedenti)
+- vm.expectRevert: la linea seguente dovrebbe rinvertirsi, se questo accade il test passa, se la linea seguente non si rinverte allora il test non lo passa (rinverte dare errore e ritornare allo stato/valori precedenti)
+- vm.prank(USER): prossima transazione dopo questa linea inviata da USER
+- vm.deal(USER, START_AMOUNT): inizia il balance dell'address con gia dentro soldi
+- makeAddr('nome'): crea address randomico
 
 ## deploy contract
 

@@ -6,8 +6,7 @@ import {Test, console} from "forge-std/Test.sol";
 import {Fundme} from "../src/Fund.sol";
 import {CounterScript} from "../script/FundMe.s.sol";
 contract FundMeTest is Test {
-    // quest viene eseguita per prima
-    address USER = makeAddr("antonio");
+    address USER = makeAddr("antonio"); // creazione address 
     uint256 constant AMOUNT = 6e18;
     uint256 constant START_AMOUNT = 10 ether;
     Fundme fundme;
@@ -15,7 +14,7 @@ contract FundMeTest is Test {
         CounterScript counterScript = new CounterScript();
         // prendi contratto da file script
         fundme = counterScript.run();
-        vm.deal(USER, START_AMOUNT);
+        vm.deal(USER, START_AMOUNT); // inizia il balance dell'address con gia dentro soldi 
     }
     // questa viene eseguita una volta eseguita setup ed esegue i controlli
     function testDemo() public view {
@@ -41,7 +40,7 @@ contract FundMeTest is Test {
 
     // cntrollo fondi con soldi maggiore di MINIMUN_USD
     function testFundWithMoney() public {
-        vm.prank(USER); // prossima transazione inviata sa USER
+        vm.prank(USER); // prossima transazione inviata da USER
         fundme.fund{value: AMOUNT}(); // le {} servono per inviare dei valori al constructor
         uint256 fund = fundme.getAmountFound(USER);
         assertEq(fund, AMOUNT);
