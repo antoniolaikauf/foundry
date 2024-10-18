@@ -56,6 +56,11 @@ se si volesse vedere tutti i nomi delle primate key cast wallet list
 - is : è per l'ereditarietà dei contratti es. contract A is B
 - msg.sender: è l'address o il ocntrato che ha inizializzato la funzione eseguita
 
+### key foundry
+
+- vm.expectRevert la linea seguente dovrebbe rinvertirsi, se questo accade il test passa, se la linea seguente non si rinverte allora il test non lo passa
+  (rinverte dare errore e ritornare allo stato/valori precedenti)
+
 ## deploy contract
 
 per interagire/compilare il contratto su usa **forge**
