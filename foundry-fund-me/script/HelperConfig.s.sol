@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 import {Script, console} from "forge-std/Script.sol";
 
-contract HelperConfig {
+contract HelperConfig is Script {
     struct NetConfig {
         address priceFeed;
     }
@@ -27,5 +27,10 @@ contract HelperConfig {
             priceFeed: 0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419
         });
         return netconfig;
+    }
+    // anvil non ha il proprio address da cui ottenere informazione
+    function anvilChain() public returns (NetConfig memory) {
+        vm.broadcast();
+        vm.stopBroadcast();
     }
 }
