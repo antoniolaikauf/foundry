@@ -13,6 +13,7 @@ import {PriceConverter} from "./PriceConverter.sol";
 error FundMe__NotOwner();
 
 contract Fundme {
+    using PriceConverter for uint256;
     MockV3Aggregator mockV3Aggregator;
     mapping(address => uint256) public address_to_amount_fund;
     address[] public funders;
@@ -28,6 +29,15 @@ contract Fundme {
     constructor(address priceFeed) {
         i_owners = msg.sender;
         s_priceFeed = AggregatorV3Interface(priceFeed);
+    }
+
+    function fund() public payable {
+        require(
+            msg.value.getConversionRate(s_priceFeed) >= MINIMUN_USD,
+            "You need to spend more ETH!"
+        );
+        address_to_amount_fund[msg.sender] = msg.value;
+        funders.push(msg.sender);
     }
 
     function getVersion() public view returns (uint256) {
