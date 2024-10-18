@@ -7,11 +7,15 @@ import {Fundme} from "../src/Fund.sol";
 import {CounterScript} from "../script/FundMe.s.sol";
 contract FundMeTest is Test {
     // quest viene eseguita per prima
+    address USER = makeAddr("antonio");
+    uint256 constant AMOUNT = 6e18;
+    uint256 constant START_AMOUNT = 10 ether;
     Fundme fundme;
     function setUp() external {
         CounterScript counterScript = new CounterScript();
         // prendi contratto da file script
         fundme = counterScript.run();
+        vm.deal(USER, START_AMOUNT);
     }
     // questa viene eseguita una volta eseguita setup ed esegue i controlli
     function testDemo() public view {
@@ -29,9 +33,17 @@ contract FundMeTest is Test {
         assertEq(version, 4);
         //6 chain eth
     }
-
-    function testFund () public {
+    // controllo fondi minore di MINIMUN_USD
+    function testFund() public {
         vm.expectRevert();
-        fundme.fund(); 
+        fundme.fund();
+    }
+
+    // cntrollo fondi con soldi maggiore di MINIMUN_USD
+    function testFundWithMoney() public {
+        vm.prank(USER); // prossima transazione inviata sa USER
+        fundme.fund{value: AMOUNT}(); // le {} servono per inviare dei valori al constructor
+        uint256 fund = fundme.getAmountFound(USER);
+        assertEq(fund, AMOUNT);
     }
 }

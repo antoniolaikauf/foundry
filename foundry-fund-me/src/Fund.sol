@@ -15,8 +15,8 @@ error FundMe__NotOwner();
 contract Fundme {
     using PriceConverter for uint256;
     MockV3Aggregator mockV3Aggregator;
-    mapping(address => uint256) public address_to_amount_fund;
-    address[] public funders;
+    mapping(address => uint256) public s_address_to_amount_fund;
+    address[] public s_funders;
     address public i_owners;
     AggregatorV3Interface private s_priceFeed;
     uint256 public constant MINIMUN_USD = 5 * 10 ** 18;
@@ -32,15 +32,30 @@ contract Fundme {
     }
 
     function fund() public payable {
+        // controlla minimo fondi per transazione
         require(
             msg.value.getConversionRate(s_priceFeed) >= MINIMUN_USD,
             "You need to spend more ETH!"
         );
-        address_to_amount_fund[msg.sender] = msg.value;
-        funders.push(msg.sender);
+        s_address_to_amount_fund[msg.sender] = msg.value;
+        s_funders.push(msg.sender);
     }
 
     function getVersion() public view returns (uint256) {
         return s_priceFeed.version();
+    }
+
+    // function get
+
+    
+    // ottieni fondi
+    function getAmountFound(
+        address _address_fund
+    ) external view returns (uint256) {
+        return s_address_to_amount_fund[_address_fund];
+    }
+    // ritorna address
+    function getFunder(uint256 index) public view returns (address) {
+        return s_funders[index];
     }
 } //https://github.com/Cyfrin/foundry-fund-me-cu/blob/main/script/DeployFundMe.s.sol
