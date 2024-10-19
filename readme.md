@@ -46,7 +46,7 @@ forge test --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHX
 ovviamente bisogna iscriversi ad alchemy e selezionare la chain che si vuole.
 Se si volesse vedere delle statistiche allora eseguire forge coverage --fork-url https://eth-mainnet.g.alchemy.com/v2/cFw9OSeqq5kXo10sQL_WJG1kXnPNCTgP.
 
-Se si volesse vedere quando gas usano i tuoi test si scrive nel prompt forge snapshot
+Se si volesse vedere quando gas usano i tuoi test si scrive nel prompt **forge snapshot**
 
 ## private key
 
@@ -75,6 +75,12 @@ Compiler run successful!
 | getTimestamp | mapping(uint256 => uint256) | 5 | 0 | 32 | 0 | 0x0000000000000000000000000000000000000000000000000000000000000000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
 | getStartedAt | mapping(uint256 => uint256) | 6 | 0 | 32 | 0 | 0x0000000000000000000000000000000000000000000000000000000000000000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
 
+**leggere e scrivere nello storage è molto dispendioso e consuma molto gas** ogni volta che si legge dello storage o si salva una parola si consuma minimo 100 gas [vedere](https://www.evm.codes/)
+
+## convenzioni
+
+quando una variabile è immutabile allora deve iniziare con i*, quando è privata allora deve iniziare con s*
+
 ## keyword
 
 - is: è per l'ereditarietà dei contratti es. contract A is B
@@ -82,6 +88,7 @@ Compiler run successful!
 - address(this): è l'address del contratto
 - tx.gasprice: costo del gas
 - gasleft(): quanto gas si ha
+- immutable: una volta che alla variabile è asseganata un valore non può essere cambiata
 
 ### key foundry
 

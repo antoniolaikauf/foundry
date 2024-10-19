@@ -113,7 +113,7 @@ contract FundMeTest is Test {
         uint256 startOwnerBalance = fundme.getOwner().balance;
 
         vm.prank(fundme.getOwner());
-        fundme.withdraw();
+        fundme.withdraw(); // chiamando questa rimuove tutti i fondi salvati precedentemente dal loop
 
         console.log(startFundmeBalance, "balance contratto start");
         console.log(startOwnerBalance, "balance owner start");

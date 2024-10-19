@@ -14,9 +14,9 @@ error FundMe__NotOwner();
 contract Fundme {
     using PriceConverter for uint256;
     MockV3Aggregator mockV3Aggregator;
-    mapping(address => uint256) public s_address_to_amount_fund;
-    address[] public s_funders;
-    address public i_owner;
+    mapping(address => uint256) private s_address_to_amount_fund;
+    address[] private s_funders;
+    address public immutable i_owner;
     AggregatorV3Interface private s_priceFeed;
     uint256 public constant MINIMUN_USD = 5 * 10 ** 18;
 
@@ -43,9 +43,10 @@ contract Fundme {
     // chi l'ha chiamata è il i_owner, se un altro chiama questa funzione e non è i_owner
     // allora uscirà un errore
     function withdraw() public onlyOwner {
+        uint256 lengthFundes = s_funders.length; // non viene salvata dentro allo storage essendo che è dentro alla funzione
         for (
             uint256 funderIndex = 0;
-            funderIndex < s_funders.length;
+            funderIndex < lengthFundes;
             funderIndex++
         ) {
             address funder = s_funders[funderIndex];
