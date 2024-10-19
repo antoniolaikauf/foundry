@@ -90,4 +90,37 @@ contract FundMeTest is Test {
         assertEq(endFundmeBalance, 0);
         assertEq(startFundmeBalance + startOwnerBalance, endOwnerBalance);
     }
+
+    function testWithdrawMultipleFunders() public {
+        uint8 funders = 10;
+        uint160 startFundersIndex = 1;
+
+        for (uint160 i = startFundersIndex; i < funders; i++) {
+            hoax(address(i), AMOUNT); // hoax è come prank quindi la prossima transazione fa riferiment ad address(i)
+            fundme.fund{value: AMOUNT}();
+        }
+
+        vm.prank(USER);
+        fundme.fund{value: AMOUNT}();
+        uint256 startFundmeBalance = address(fundme).balance;
+        uint256 startOwnerBalance = fundme.getOwner().balance;
+
+        vm.prank(fundme.getOwner());
+        fundme.withdraw();
+
+        console.log(startFundmeBalance, "balance contratto start");
+        console.log(startOwnerBalance, "balance owner start");
+
+        uint256 endFundmeBalance = address(fundme).balance;
+        uint256 endOwnerBalance = fundme.getOwner().balance;
+
+        console.log(endFundmeBalance, "Balance del contratto dopo di withdraw");
+        console.log(endOwnerBalance, "Balance dell'owner dopo di withdraw");
+        console.log((endOwnerBalance - startOwnerBalance), "owner balance");
+
+        assert(address(fundme).balance == 0);
+        assert(
+            startFundmeBalance + startOwnerBalance == fundme.getOwner().balance
+        );
+    }
 }
