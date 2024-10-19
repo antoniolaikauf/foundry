@@ -8,6 +8,7 @@ contract FundMeTest is Test {
     address USER = makeAddr("antonio"); // creazione address
     uint256 constant AMOUNT = 6e18;
     uint256 constant START_AMOUNT = 10 ether;
+
     Fundme fundme;
     function setUp() external {
         CounterScript counterScript = new CounterScript();
@@ -99,9 +100,15 @@ contract FundMeTest is Test {
             hoax(address(i), AMOUNT); // hoax è come prank quindi la prossima transazione fa riferiment ad address(i)
             fundme.fund{value: AMOUNT}();
         }
-
+        /*
+         se non si mette vm.txGasPrice(GAS); in anvil il gas speso sarà sempre 0 cosa in una vera blockchain
+         non è possibile.
+         Per vedere quanto gas ti rimane si usa una build function che esiste in solidity 
+         gas  gasleft()
+        */
         vm.prank(USER);
         fundme.fund{value: AMOUNT}();
+
         uint256 startFundmeBalance = address(fundme).balance;
         uint256 startOwnerBalance = fundme.getOwner().balance;
 

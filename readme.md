@@ -44,7 +44,9 @@ allora prima bisogna pulire la cache con forge clean e dopo fare il comando.
 se si volesse eseguire un test con una chain si usa
 forge test --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHXQ2bxeXB9aMEp15
 ovviamente bisogna iscriversi ad alchemy e selezionare la chain che si vuole.
-Se si volesse vedere delle statistiche allora eseguire forge coverage --fork-url https://eth-mainnet.g.alchemy.com/v2/cFw9OSeqq5kXo10sQL_WJG1kXnPNCTgP
+Se si volesse vedere delle statistiche allora eseguire forge coverage --fork-url https://eth-mainnet.g.alchemy.com/v2/cFw9OSeqq5kXo10sQL_WJG1kXnPNCTgP.
+
+Se si volesse vedere quando gas usano i tuoi test si scrive nel prompt forge snapshot
 
 ## private key
 
@@ -54,13 +56,32 @@ se si volesse vedere tutti i nomi delle primate key cast wallet list
 ## chisel
 
 Chisel è un componente che si trova direttamente dentro foundry e se si scrive nel terminale chisel permetterà di eseguire linea di codice uno a uno 'It can be used to quickly test the behavior of Solidity snippets on a local or forked network.'.
-Ti permette di scrivere direttamente codice nel terminale 
+Ti permette di scrivere direttamente codice nel terminale
+
+## storage
+
+Ogni volta che noi creiamo una variabile viene salvate nello storage, invece le variabili dentro a funzioni non vengono messe dentro allo storage essendo che dopo l'esecuzione della funzione queste vengono eliminate.
+
+Se si volesse vedere lo storage di un contratto allora si esegue 'forge inspect 'nome contratto' storagelayout', un altro modo sarebbe prima di deploiare il contratto e dopo eseguire cast storage 'address contratto'
+
+Compiler run successful!
+| Name | Type | Slot | Offset | Bytes | Value | Hex Value | Contract |
+|-----------------|-----------------------------|------|--------|-------|--------------|--------------------------------------------------------------------|-------------------------------------------------------|
+| decimals | uint8 | 0 | 0 | 1 | 8 | 0x0000000000000000000000000000000000000000000000000000000000000008 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
+| latestAnswer | int256 | 1 | 0 | 32 | 200000000000 | 0x0000000000000000000000000000000000000000000000000000002e90edd000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
+| latestTimestamp | uint256 | 2 | 0 | 32 | 1729348236 | 0x000000000000000000000000000000000000000000000000000000006713c28c | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
+| latestRound | uint256 | 3 | 0 | 32 | 1 | 0x0000000000000000000000000000000000000000000000000000000000000001 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
+| getAnswer | mapping(uint256 => int256) | 4 | 0 | 32 | 0 | 0x0000000000000000000000000000000000000000000000000000000000000000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
+| getTimestamp | mapping(uint256 => uint256) | 5 | 0 | 32 | 0 | 0x0000000000000000000000000000000000000000000000000000000000000000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
+| getStartedAt | mapping(uint256 => uint256) | 6 | 0 | 32 | 0 | 0x0000000000000000000000000000000000000000000000000000000000000000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
 
 ## keyword
 
 - is: è per l'ereditarietà dei contratti es. contract A is B
 - msg.sender: è l'address della persona che interagisse con il contratto
 - address(this): è l'address del contratto
+- tx.gasprice: costo del gas
+- gasleft(): quanto gas si ha
 
 ### key foundry
 
