@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.28;
-
 // installate direttamente forge install smartcontractkit/chainlink-brownie-contracts --no-commit si trovano direttaente
 // in lib chainlink-brownie-contracts
 // primo modo
@@ -40,7 +39,9 @@ contract Fundme {
         s_address_to_amount_fund[msg.sender] = msg.value;
         s_funders.push(msg.sender);
     }
-
+    // onlyOwner permette l'esecuzione corretta di questa funzione e controlla che
+    // chi l'ha chiamata è il i_owner, se un altro chiama questa funzione e non è i_owner
+    // allora uscirà un errore
     function withdraw() public onlyOwner {
         for (
             uint256 funderIndex = 0;
@@ -51,8 +52,8 @@ contract Fundme {
             s_address_to_amount_fund[funder] = 0;
         }
         s_funders = new address[](0);
-        // Transfer vs call vs Send
-        // payable(msg.sender).transfer(address(this).balance);
+
+        // invia i soldi dell'address a i_owner
         (bool success, ) = i_owner.call{value: address(this).balance}("");
         require(success);
     }
@@ -72,5 +73,9 @@ contract Fundme {
     // ritorna address
     function getFunder(uint256 index) public view returns (address) {
         return s_funders[index];
+    }
+
+    function getOwner() external view returns (address) {
+        return i_owner;
     }
 } //https://github.com/Cyfrin/foundry-fund-me-cu/blob/main/script/DeployFundMe.s.sol

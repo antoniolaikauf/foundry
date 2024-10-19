@@ -2,7 +2,6 @@
 pragma solidity ^0.8.28;
 
 import {Test, console} from "forge-std/Test.sol";
-
 import {Fundme} from "../src/Fund.sol";
 import {CounterScript} from "../script/FundMe.s.sol";
 contract FundMeTest is Test {
@@ -54,7 +53,7 @@ contract FundMeTest is Test {
     }
 
     function testPrelievo() public {
-        // invio transazione 
+        // invio transazione
         vm.prank(USER);
         fundme.fund{value: AMOUNT}();
         // deve ritornare allo stato precedente essendo che lo USER è diverso da i_owner
@@ -62,5 +61,33 @@ contract FundMeTest is Test {
         vm.expectRevert();
         vm.prank(USER);
         fundme.withdraw();
+    }
+
+    // bug il balance di fundme.getOwner().balance; inizia con 79228162514264337593543950335
+    function testPrelievoSingolo() public {
+        vm.prank(USER);
+        fundme.fund{value: AMOUNT}();
+        uint256 startFundmeBalance = address(fundme).balance; // balance del contratto (fondi accumulati all'interno del contratto)
+        uint256 startOwnerBalance = fundme.getOwner().balance; // balance del indirizzo del owner (fondi della singola persona)
+        console.log(
+            startFundmeBalance,
+            "Balance del contratto prima di withdraw"
+        );
+        console.log(startOwnerBalance, "Balance dell'owner prima di withdraw");
+        vm.prank(fundme.getOwner());
+        fundme.withdraw(); // owner preleva i fondi dal contratto
+
+        uint256 endOwnerBalance = fundme.getOwner().balance;
+        uint256 endFundmeBalance = address(fundme).balance;
+
+        console.log(endFundmeBalance, "Balance del contratto dopo di withdraw");
+        console.log(endOwnerBalance, "Balance dell'owner dopo di withdraw");
+        // non so come mai ma inizia con 79228162514264337593543950335 i balance
+        console.log(
+            "balance Owner:",
+            (endOwnerBalance - 79228162514264337593543950335)
+        );
+        assertEq(endFundmeBalance, 0);
+        assertEq(startFundmeBalance + startOwnerBalance, endOwnerBalance);
     }
 }
