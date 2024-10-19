@@ -24,7 +24,7 @@ contract FundMeTest is Test {
 
     function testOwner() public view {
         // address(this) ritorna l'address del contratto address(this)
-        assertEq(fundme.i_owners(), msg.sender);
+        assertEq(fundme.i_owner(), msg.sender);
     }
 
     function testVersion() public view {
@@ -51,5 +51,16 @@ contract FundMeTest is Test {
         fundme.fund{value: AMOUNT}();
         address funder = fundme.getFunder(0);
         assertEq(funder, USER);
+    }
+
+    function testPrelievo() public {
+        // invio transazione 
+        vm.prank(USER);
+        fundme.fund{value: AMOUNT}();
+        // deve ritornare allo stato precedente essendo che lo USER è diverso da i_owner
+        // che sarebbe msg.sender ma se si esegue di qua sarebbe address(this)
+        vm.expectRevert();
+        vm.prank(USER);
+        fundme.withdraw();
     }
 }

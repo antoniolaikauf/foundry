@@ -17,17 +17,17 @@ contract Fundme {
     MockV3Aggregator mockV3Aggregator;
     mapping(address => uint256) public s_address_to_amount_fund;
     address[] public s_funders;
-    address public i_owners;
+    address public i_owner;
     AggregatorV3Interface private s_priceFeed;
     uint256 public constant MINIMUN_USD = 5 * 10 ** 18;
 
     modifier onlyOwner() {
-        if (msg.sender != i_owners) revert FundMe__NotOwner();
+        if (msg.sender != i_owner) revert FundMe__NotOwner();
         _;
     }
     // se si mette un input allora alla creazione del contratto nello script bisognerebbe aggiungere un input
     constructor(address priceFeed) {
-        i_owners = msg.sender;
+        i_owner = msg.sender;
         s_priceFeed = AggregatorV3Interface(priceFeed);
     }
 
@@ -41,13 +41,28 @@ contract Fundme {
         s_funders.push(msg.sender);
     }
 
+    function withdraw() public onlyOwner {
+        for (
+            uint256 funderIndex = 0;
+            funderIndex < s_funders.length;
+            funderIndex++
+        ) {
+            address funder = s_funders[funderIndex];
+            s_address_to_amount_fund[funder] = 0;
+        }
+        s_funders = new address[](0);
+        // Transfer vs call vs Send
+        // payable(msg.sender).transfer(address(this).balance);
+        (bool success, ) = i_owner.call{value: address(this).balance}("");
+        require(success);
+    }
+
     function getVersion() public view returns (uint256) {
         return s_priceFeed.version();
     }
 
     // function get
 
-    
     // ottieni fondi
     function getAmountFound(
         address _address_fund
