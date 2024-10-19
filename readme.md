@@ -80,6 +80,7 @@ Compiler run successful!
 ## convenzioni
 
 quando una variabile è immutabile allora deve iniziare con i*, quando è privata allora deve iniziare con s*
+i file script diniscono con s.sol
 
 ## keyword
 
@@ -89,6 +90,7 @@ quando una variabile è immutabile allora deve iniziare con i*, quando è privat
 - tx.gasprice: costo del gas
 - gasleft(): quanto gas si ha
 - immutable: una volta che alla variabile è asseganata un valore non può essere cambiata
+- external: la funzione può essere chiamata solo dall'esterno e quindi non si può fare la ricursione
 
 ### key foundry
 
