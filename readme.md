@@ -51,10 +51,16 @@ Se si volesse vedere delle statistiche allora eseguire forge coverage --fork-url
 'cast wallet import defaul_key --interactive' incripta la tua private key e ti fornirà un address
 se si volesse vedere tutti i nomi delle primate key cast wallet list
 
+## chisel
+
+Chisel è un componente che si trova direttamente dentro foundry e se si scrive nel terminale chisel permetterà di eseguire linea di codice uno a uno 'It can be used to quickly test the behavior of Solidity snippets on a local or forked network.'.
+Ti permette di scrivere direttamente codice nel terminale 
+
 ## keyword
 
-- is : è per l'ereditarietà dei contratti es. contract A is B
-- msg.sender: è l'address o il ocntrato che ha inizializzato la funzione eseguita
+- is: è per l'ereditarietà dei contratti es. contract A is B
+- msg.sender: è l'address della persona che interagisse con il contratto
+- address(this): è l'address del contratto
 
 ### key foundry
 
