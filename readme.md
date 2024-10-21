@@ -77,6 +77,11 @@ Compiler run successful!
 
 **leggere e scrivere nello storage è molto dispendioso e consuma molto gas** ogni volta che si legge dello storage o si salva una parola si consuma minimo 100 gas [vedere](https://www.evm.codes/)
 
+
+## pragma
+questa definisce la versione del compiler di soliditi che trasforma il codice in codice macchina per EVM 
+ci possono essere due tipi una con davant ^ pragma solidity ^0.8.28; dice che si usa un compiler da quella versione in su o senza la ^ pragma solidity 0.8.28; in questo caso la versione è solo uella 
+
 ## convenzioni
 
 quando una variabile è immutabile allora deve iniziare con i*, quando è privata allora deve iniziare con s*
