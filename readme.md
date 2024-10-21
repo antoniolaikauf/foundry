@@ -76,6 +76,7 @@ Compiler run successful!
 | getStartedAt | mapping(uint256 => uint256) | 6 | 0 | 32 | 0 | 0x0000000000000000000000000000000000000000000000000000000000000000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
 
 **leggere e scrivere nello storage è molto dispendioso e consuma molto gas** ogni volta che si legge dello storage o si salva una parola si consuma minimo 100 gas [vedere](https://www.evm.codes/)
+per consumare meno gas fare poche chiamate ad altri contratti e all'intenro di un contratto cercare di fare meno operazioni e metodi per trovare un elemento con un loop, questi due compiti consumano molto gas 
 
 ## pragma
 
@@ -108,13 +109,31 @@ i file script diniscono con s.sol
 - immutable: una volta che alla variabile è asseganata un valore non può essere cambiata
 - external: la funzione può essere chiamata solo dall'esterno e quindi non si può fare la ricursione
 - visibilità della funzione:
-  1. private: possono essere chiamate solo all'interno del contratto in cui sono, non possono essere chiamate da altri contratti 
-  2. public: è di default e possono essere chiamate da qualsiasi altro contratto 
-  3. external: sono come public function ma non possono essere chiamate dall'interno del contratto 
+  1. private: possono essere chiamate solo all'interno del contratto in cui sono, non possono essere chiamate da altri contratti
+  2. public: è di default e possono essere chiamate da qualsiasi altro contratto
+  3. external: sono come public function ma non possono essere chiamate dall'interno del contratto
   4. internal: sono simili alle private function
 - comportamento funzioni
-  1. view: si può solo leggere dati dalla blockchain ma non può modificarli 
+  1. view: si può solo leggere dati dalla blockchain ma non può modificarli
   2. pure: non permette di leggere ne scrivere nessuna variabile salvata nello storage
+  3. payable: è una funzione che accetta pagamenti in arrivo
+- costructor: la funzione costructor viene messa dentro al contratto e viene eseguita solo una volta durenate la creazione del contratto
+- Function Modifiers: vengono usate spesso per creare condizioni che vengono usate spesso all'interno del contratto
+  es
+
+modifier onlyOwner {
+require(msg.sender == owner);
+\_;
+}
+
+function destroy() public onlyOwner {
+selfdestruct(owner);
+}
+
+qua la funzione destroy viene applicata solo se onlyOwner ritorna true
+
+- Quando una transazione viene completata (con successo o meno), produce una ricevuta della transazione (receipt). La ricevuta della transazione contiene voci di registro che forniscono informazioni sulle azioni che si sono verificate durante l'esecuzione della transazione. gli eventi sono usati per costruire questi logs
+  Gli eventi sono particolarmente utili per i client leggeri e i servizi DApp, che possono “osservare” eventi specifici e segnalarli all'interfaccia utente, oppure modificare lo stato dell'applicazione per riflettere un evento in un contratto sottostante.
 
 ### key foundry
 
