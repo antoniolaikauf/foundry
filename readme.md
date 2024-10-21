@@ -77,10 +77,10 @@ Compiler run successful!
 
 **leggere e scrivere nello storage è molto dispendioso e consuma molto gas** ogni volta che si legge dello storage o si salva una parola si consuma minimo 100 gas [vedere](https://www.evm.codes/)
 
-
 ## pragma
-questa definisce la versione del compiler di soliditi che trasforma il codice in codice macchina per EVM 
-ci possono essere due tipi una con davant ^ pragma solidity ^0.8.28; dice che si usa un compiler da quella versione in su o senza la ^ pragma solidity 0.8.28; in questo caso la versione è solo uella 
+
+questa definisce la versione del compiler di soliditi che trasforma il codice in codice macchina per EVM
+ci possono essere due tipi una con davant ^ pragma solidity ^0.8.28; dice che si usa un compiler da quella versione in su o senza la ^ pragma solidity 0.8.28; in questo caso la versione è solo uella
 
 ## convenzioni
 
@@ -91,11 +91,30 @@ i file script diniscono con s.sol
 
 - is: è per l'ereditarietà dei contratti es. contract A is B
 - msg.sender: è l'address della persona che interagisse con il contratto
+- msg.value: quantità di eth inviati
+- msg.data: il payload
+- msg.sig: i primi 4 bytes del payload
+- block.blockhash(**blockNumber**): l'hash del blocco messo tra parentesi
+- block.coinbase: address miner
+- block.gaslimit: limite del gas spendibile
+- block.number: l'altezza della blockchain
+- block.timestamp: data del blocco minato
+- address.balance: bilancio dell'address
+- address.transfer(**amount**): trasferisce l'amount (in wei) all'address
 - address(this): è l'address del contratto
+- selfdestruct(**recipient_address**): per eliminare l'address
 - tx.gasprice: costo del gas
 - gasleft(): quanto gas si ha
 - immutable: una volta che alla variabile è asseganata un valore non può essere cambiata
 - external: la funzione può essere chiamata solo dall'esterno e quindi non si può fare la ricursione
+- visibilità della funzione:
+  1. private: possono essere chiamate solo all'interno del contratto in cui sono, non possono essere chiamate da altri contratti 
+  2. public: è di default e possono essere chiamate da qualsiasi altro contratto 
+  3. external: sono come public function ma non possono essere chiamate dall'interno del contratto 
+  4. internal: sono simili alle private function
+- comportamento funzioni
+  1. view: si può solo leggere dati dalla blockchain ma non può modificarli 
+  2. pure: non permette di leggere ne scrivere nessuna variabile salvata nello storage
 
 ### key foundry
 
