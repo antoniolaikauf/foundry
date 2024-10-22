@@ -210,3 +210,6 @@ es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-k
 
 queste due saranno di tipo diverso e si può vederlo nei file dentro alla cartella broadcast
 il type dei recives. Il tipo di default è quella "type": "0x2",
+
+## P.S 
+se si volesse evitare di eseguire sempre questi comandi lunghi per interagire con i contratti allora è meglio fare un MAKEFILE 
