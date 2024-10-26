@@ -14,6 +14,7 @@ rust compiler e cargo essendo che foundry è sviluppato in rust
 
 creazione libreria
 **forge init**
+
 se da questo errore perchè il folder non è vuoto allora provare **forge init --force**
 Error:
 The target directory is a part of or on its own an already initialized git repository,
@@ -46,6 +47,8 @@ forge test --fork-url https://zksync-mainnet.g.alchemy.com/v2/8TuhaXDeN4Mk0R-fHX
 ovviamente bisogna iscriversi ad alchemy e selezionare la chain che si vuole.
 Se si volesse vedere delle statistiche allora eseguire forge coverage --fork-url https://eth-mainnet.g.alchemy.com/v2/cFw9OSeqq5kXo10sQL_WJG1kXnPNCTgP.
 
+N.B alcuni test funzionano sul vanilla foundry ma non sulla foundry-sksync e viceversa alcuni funzionano su foundry-sksync ma non su fundry
+
 Se si volesse vedere quando gas usano i tuoi test si scrive nel prompt **forge snapshot**
 
 ## private key
@@ -76,7 +79,7 @@ Compiler run successful!
 | getStartedAt | mapping(uint256 => uint256) | 6 | 0 | 32 | 0 | 0x0000000000000000000000000000000000000000000000000000000000000000 | test/mocks/AggregatorV3Interface.sol:MockV3Aggregator |
 
 **leggere e scrivere nello storage è molto dispendioso e consuma molto gas** ogni volta che si legge dello storage o si salva una parola si consuma minimo 100 gas [vedere](https://www.evm.codes/)
-per consumare meno gas fare poche chiamate ad altri contratti e all'intenro di un contratto cercare di fare meno operazioni e metodi per trovare un elemento con un loop, questi due compiti consumano molto gas 
+per consumare meno gas fare poche chiamate ad altri contratti e all'intenro di un contratto cercare di fare meno operazioni e metodi per trovare un elemento con un loop, questi due compiti consumano molto gas
 
 ## pragma
 
@@ -211,5 +214,6 @@ es. forge script script/deploy.s.sol --rcp-url http://127.0.0.1:8545 --rpivate-k
 queste due saranno di tipo diverso e si può vederlo nei file dentro alla cartella broadcast
 il type dei recives. Il tipo di default è quella "type": "0x2",
 
-## P.S 
-se si volesse evitare di eseguire sempre questi comandi lunghi per interagire con i contratti allora è meglio fare un MAKEFILE 
+## P.S
+
+se si volesse evitare di eseguire sempre questi comandi lunghi per interagire con i contratti allora è meglio fare un MAKEFILE

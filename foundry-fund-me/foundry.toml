@@ -6,6 +6,6 @@ remappings = [
     # ogni volta che vede  @chainlink/contracts/ rimpiazzalo con lib/chainlink-brownie-contracts/contracts/
     '@chainlink/contracts/=lib/chainlink-brownie-contracts/contracts/',
 ]
-#ffi = true # attenzione tenere spento più possibilmente perche permette a foundry di eseguire comandi nella tua macchina
+ffi = true # attenzione tenere spento più possibilmente perche permette a foundry di eseguire comandi nella tua macchina
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
