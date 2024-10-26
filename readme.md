@@ -187,6 +187,11 @@ questo ritornerà un parametro in hex che si dovra convertire
 cast --to-base risultato in hex dec (dec stà per decimale)
 es.cast --to-base 0x000000000000000000000000000000000000000000000000000000000000007b dec
 
+## logs 
+nei logs ci saranno gli eventi che si vogliono registrare cosi che le persone all'esterno della blockchain possano capire cosa sta succedendo.
+Per scrivere questi eventi nei logs si usano gli **eventi**.
+Gli smart contract non possono accedere ai log ed è per questo che salvare dati sui logs è più economico rispetto a salvarli nello storage
+
 ## sicurezza
 
 con soldi non usare il file .env con dentro la chiave privata dell'account
