@@ -2,7 +2,7 @@
 	path = foundry_storage/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
 [submodule "lib/forge-std"]
-	path = foundry-fund-me/lib/forge-std
+	path = lotteria/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
 [submodule "foundry-fund-me/lib/chainlink-brownie-contracts"]
 	path = foundry-fund-me/lib/chainlink-brownie-contracts
