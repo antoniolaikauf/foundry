@@ -90,11 +90,12 @@ ci possono essere due tipi una con davant ^ pragma solidity ^0.8.28; dice che si
 
 quando una variabile è immutabile allora deve iniziare con i*, quando è privata allora deve iniziare con s*
 i file script diniscono con s.sol
+una buona pratica è di specificare sempre la visibilità di una funzione
 
 ## keyword
 
 - is: è per l'ereditarietà dei contratti es. contract A is B
-- msg.sender: è l'address della persona che interagisse con il contratto
+- msg.sender: è l'address della persona che interagisse con il contratto o l'address di un altro contratto
 - msg.value: quantità di eth inviati
 - msg.data: il payload
 - msg.sig: i primi 4 bytes del payload
@@ -108,6 +109,7 @@ i file script diniscono con s.sol
 - address(this): è l'address del contratto
 - selfdestruct(**recipient_address**): per eliminare l'address
 - tx.gasprice: costo del gas
+- tx.origin: l’indirizzo dell'account esterno che ha interagito con il contratto
 - gasleft(): quanto gas si ha
 - immutable: una volta che alla variabile è asseganata un valore non può essere cambiata
 - external: la funzione può essere chiamata solo dall'esterno e quindi non si può fare la ricursione
@@ -123,11 +125,13 @@ i file script diniscono con s.sol
 - costructor: la funzione costructor viene messa dentro al contratto e viene eseguita solo una volta durenate la creazione del contratto
 - Function Modifiers: vengono usate spesso per creare condizioni che vengono usate spesso all'interno del contratto
   es
-
-modifier onlyOwner {
-require(msg.sender == owner);
-\_;
-}
+- delegatecall: permette al altri contratti di leggere e modificare il suo storage. es quando il contratto A chiama B con delegatecall, allora il codice di B viene eseguito come se facesse parte di A e quindi può leggere sia le variabili di A ma può anche modificarle
+- send: invii soldi ad un address
+- transfer: fa lo stesso di send ma se fallisce fa il **revert** cosa che **send non fa** e ritornerà solo false, infatti transfer è più sicura di send essendo che con send devi per forza mettere una condizione se la funzione ha ritornato true se si volesse eseguire altro codice dopo send
+  modifier onlyOwner {
+  require(msg.sender == owner);
+  \_;
+  }
 
 function destroy() public onlyOwner {
 selfdestruct(owner);
@@ -187,7 +191,8 @@ questo ritornerà un parametro in hex che si dovra convertire
 cast --to-base risultato in hex dec (dec stà per decimale)
 es.cast --to-base 0x000000000000000000000000000000000000000000000000000000000000007b dec
 
-## logs 
+## logs
+
 nei logs ci saranno gli eventi che si vogliono registrare cosi che le persone all'esterno della blockchain possano capire cosa sta succedendo.
 Per scrivere questi eventi nei logs si usano gli **eventi**.
 Gli smart contract non possono accedere ai log ed è per questo che salvare dati sui logs è più economico rispetto a salvarli nello storage
@@ -222,3 +227,34 @@ il type dei recives. Il tipo di default è quella "type": "0x2",
 ## P.S
 
 se si volesse evitare di eseguire sempre questi comandi lunghi per interagire con i contratti allora è meglio fare un MAKEFILE
+
+**SOLIDITY NON SUPPORTA IL FLOAT**
+
+## TIPI DI ATTACCHI
+
+- Quando si passano i parametri a uno smart contract, questi sono codificati secondo le specifiche ABI. È possibile inviare parametri codificati più corti della lunghezza prevista (ad esempio, l'invio di un indirizzo di soli 38 caratteri esadecimali (19 byte) invece dei 40 caratteri esadecimali standard (20 byte)). In questo caso, l'EVM aggiungerà degli zeri alla fine dei parametri codificati per recuperare la lunghezza prevista
+  L'esempio più chiaro è quello di uno scambio che non verifica l'indirizzo di un token ERC20 quando un utente richiede un prelievo.
+
+- underflow si ha quando si sottrae un numero da una variabile che è 0 es. sottrae 1 da unit8 = 0 porterà a 255 e non a -1
+  overflow si ha quando si aggiunge un numero troppo granse ad un tipo di variabile es. aggiungere 257 a uint8 = 0 porterà a 1
+
+- codice che chiama contratti esterni devono essere fatti **attentamente**
+  usando la key **new**.
+  constructor() {
+  encryptionLibrary = new Rot13Encryption();
+  }
+  se un contratto non ha new ma ha direttamente un address quel contratto potrebbe essere manevolo essendo che non si sa dove porta quell'address
+  es
+  constructor() {
+  encryptionLibrary = 'address qua '
+  }
+
+- usare timestamp o now è rischioso essendo che possono essere manipolati dai miner che decidono quali transazioni mettere nel blocco
+
+- attacchi di dos se si usa un array che può essre manipolato dal un utente e si fa un loop su l'array
+
+- con delegate essendo che si lascia modificare il storage da un altro contratto
+
+- non dare lo stato di visibilità alle funzioni (essendo che di default è public)
+
+- Solidity ha una variabile globale, tx.origin, che attraversa l'intero stack delle chiamate e contiene l'indirizzo dell'account che ha originariamente inviato la chiamata (o la transazione). L'uso di questa variabile per l'autenticazione in uno smart contract rende il contratto vulnerabile a un attacco di tipo phishing
