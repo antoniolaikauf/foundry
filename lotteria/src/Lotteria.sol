@@ -20,3 +20,27 @@ contract Lotteria {
         return (partecipanti[0], vincita);
     }
 }
+
+contract Gamble {
+    uint256 private balance_address_contract = address(this).balance;
+    constructor(uint256 money) {
+        balance_address_contract = money;
+    }
+
+    function dubleGamble() external payable {
+        address address_player = msg.sender;
+        require(msg.value == 1 ether);
+        if (block.timestamp % 15 == 0) {
+            (bool success, ) = address_player.call{value: 1 ether}(""); // controllare ogni volta send
+            require(success);
+            balance_address_contract -= 1 ether;
+        } else {
+            // fuck off
+            balance_address_contract += 1 ether;
+        }
+    }
+
+    function getBalance_contract() public view returns (uint256) {
+        return address(this).balance;
+    }
+}
