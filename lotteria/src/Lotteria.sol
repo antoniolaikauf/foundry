@@ -30,7 +30,11 @@ contract Gamble {
     function dubleGamble() external payable {
         address address_player = msg.sender;
         require(msg.value == 1 ether);
-        if (block.timestamp % 15 == 0) {
+        require(
+            address(this).balance > 0,
+            "gg i finished my money and fuck you"
+        );
+        if (block.timestamp % 2 == 0) {
             (bool success, ) = address_player.call{value: 1 ether}(""); // controllare ogni volta send
             require(success);
             balance_address_contract -= 1 ether;
@@ -41,6 +45,6 @@ contract Gamble {
     }
 
     function getBalance_contract() public view returns (uint256) {
-        return address(this).balance;
+        return balance_address_contract;
     }
 }
