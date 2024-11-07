@@ -5,11 +5,11 @@ import {Script, console} from "forge-std/Script.sol";
 import {Lotteria, Gamble} from "../src/Lotteria.sol";
 
 contract LotteriaDeploy is Script {
-    function run() external returns (Gamble) {
+    function run() external returns (Lotteria) {
         vm.startBroadcast();
-        Gamble gamble = new Gamble(10 ether);
-        // Lotteria lotteria = new Lotteria();
+        // Gamble gamble = new Gamble(10 ether);
+        Lotteria lotteria = new Lotteria(10 ether);
         vm.stopBroadcast();
-        return gamble;
+        return lotteria;
     }
 }

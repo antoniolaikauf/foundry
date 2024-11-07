@@ -10,3 +10,6 @@
 [submodule "foundry-fund-me/lib/foundry-devops"]
 	path = foundry-fund-me/lib/foundry-devops
 	url = https://github.com/Cyfrin/foundry-devops
+[submodule "lotteria/lib/chainlink-brownie-contracts"]
+	path = lotteria/lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts

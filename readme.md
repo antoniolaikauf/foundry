@@ -230,6 +230,8 @@ se si volesse evitare di eseguire sempre questi comandi lunghi per interagire co
 
 **SOLIDITY NON SUPPORTA IL FLOAT**
 
+per ottenere un numero randomico bisogna farsi aiutare da terze parti essendo che blockchain è deterministica è difficile ottener eun numero randomico. Per generare un numero randomico in solidity bisogna inviare un **seed** off-chain ad un oracle che genererà un numero randomico  
+
 ## TIPI DI ATTACCHI
 
 - Quando si passano i parametri a uno smart contract, questi sono codificati secondo le specifiche ABI. È possibile inviare parametri codificati più corti della lunghezza prevista (ad esempio, l'invio di un indirizzo di soli 38 caratteri esadecimali (19 byte) invece dei 40 caratteri esadecimali standard (20 byte)). In questo caso, l'EVM aggiungerà degli zeri alla fine dei parametri codificati per recuperare la lunghezza prevista

@@ -1,22 +1,46 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.19;
 
-contract Lotteria {
+import {VRFCoordinatorV2Interface} from "../lib/chainlink-brownie-contracts/contracts/src/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.sol";
+
+contract Lotteria is VRFCoordinatorV2Interface  {
     error NotEnoughEth();
-    uint256 constant MINIMUN_ENTRANCE = 0.1 ether;
+    uint256 private immutable i_MINIMUN_ENTRANCE;
+    // ogni quanto si estrae un vincitore
+    uint256 private immutable i_time_winner;
+
+    uint256 private i_last_time;
+
     uint256 vincita;
     address payable[] private partecipanti; // gli address sono payable cosi che possono ricevere soldi della vincita
     event addressStore(address);
+
+    constructor(uint256 _entra_fee, uint256 _time) {
+        i_MINIMUN_ENTRANCE = _entra_fee;
+        i_time_winner = _time;
+        i_last_time = block.timestamp;
+    }
     function enterRuffle(uint256 _price_person) public payable {
         // rinvertire se manda meno ether
         // require(_price_person * 1e18 >= MINIMUN_ENTRANCE, NotEnoughEth()); // funziona con solo una versione di compilatore
-        if (_price_person * 1e18 < MINIMUN_ENTRANCE) revert NotEnoughEth();
+        if (_price_person * 1e18 < i_MINIMUN_ENTRANCE) revert NotEnoughEth();
         emit addressStore(msg.sender);
         vincita += _price_person;
         partecipanti.push(payable(msg.sender));
     }
 
-    function winner() public view returns (address, uint256) {
+    function winner() public returns (address, uint256) {
+        if (block.timestamp - i_last_time < i_time_winner) revert();
+
+        requestId = COORDINATOR.requestRandomWords(
+            s_keyHash,
+            s_subscriptionId,
+            requestConfirmations,
+            callbackGasLimit,
+            numWords
+        );
+
+        i_last_time = block.timestamp;
         return (partecipanti[0], vincita);
     }
 }
