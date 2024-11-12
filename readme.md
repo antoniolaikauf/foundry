@@ -148,6 +148,13 @@ qua la funzione destroy viene applicata solo se onlyOwner ritorna true
   1. ether 
   2. gwei 1 gwei === 1^9 wei
   3. wei, 1 ether === 1^18 wei
+- type:
+Es. type Price is uint128;
+type C is V;, where C is the name of the newly introduced type and V has to be a built-in value type 
+queste tipo di variabili scelte dall'user possono avere due funzioni 
+Price.wrap()  che prende il valore (che è un uint128) all'interno e lo fa diventare di tipo Price
+Price.unwrap() che prende un valore di tipo Price e lo ritrasforma di tipo uint128 
+di solito si utilizza questo tipo di semnatica per migliorare la leggibilità e la sicurezza 
 
 ### key foundry
 
