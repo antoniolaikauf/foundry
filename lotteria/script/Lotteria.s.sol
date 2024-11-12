@@ -8,7 +8,7 @@ contract LotteriaDeploy is Script {
     function run() external returns (Lotteria) {
         vm.startBroadcast();
         // Gamble gamble = new Gamble(10 ether);
-        Lotteria lotteria = new Lotteria(10 ether);
+        Lotteria lotteria = new  Lotteria();
         vm.stopBroadcast();
         return lotteria;
     }

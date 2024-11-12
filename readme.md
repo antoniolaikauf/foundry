@@ -112,12 +112,13 @@ una buona pratica è di specificare sempre la visibilità di una funzione
 - tx.origin: l’indirizzo dell'account esterno che ha interagito con il contratto
 - gasleft(): quanto gas si ha
 - immutable: una volta che alla variabile è asseganata un valore non può essere cambiata
+- constant: il valore della variabile non può essete cabiato una volta che si è inizializzata
 - external: la funzione può essere chiamata solo dall'esterno e quindi non si può fare la ricursione
 - visibilità della funzione:
   1. private: possono essere chiamate solo all'interno del contratto in cui sono, non possono essere chiamate da altri contratti
   2. public: è di default e possono essere chiamate da qualsiasi altro contratto
   3. external: sono come public function ma non possono essere chiamate dall'interno del contratto
-  4. internal: sono simili alle private function
+  4. internal: sono simili alle private function l'unica differenza è che queste funzioni possono essere chiamate anche da contratti che ereditano altri contratti, quindi sia il contratto che main e il contratto che viene ereditato possono accedere a queste funzioni
 - comportamento funzioni
   1. view: si può solo leggere dati dalla blockchain ma non può modificarli
   2. pure: non permette di leggere ne scrivere nessuna variabile salvata nello storage
@@ -127,7 +128,9 @@ una buona pratica è di specificare sempre la visibilità di una funzione
   es
 - delegatecall: permette al altri contratti di leggere e modificare il suo storage. es quando il contratto A chiama B con delegatecall, allora il codice di B viene eseguito come se facesse parte di A e quindi può leggere sia le variabili di A ma può anche modificarle
 - send: invii soldi ad un address
-- transfer: fa lo stesso di send ma se fallisce fa il **revert** cosa che **send non fa** e ritornerà solo false, infatti transfer è più sicura di send essendo che con send devi per forza mettere una condizione se la funzione ha ritornato true se si volesse eseguire altro codice dopo send
+- transfer: fa lo stesso di send ma se fallisce fa il **revert** cosa che **send non fa** e ritornerà solo false, infatti transfer è più sicura di send essendo che con send devi per forza mettere una condizione se la funzione ha ritornato true 
+- call: altro metodo per inviare i soldi e anche in questo bisogna controllare se ritorna true o no come con send 
+- selfdestruct: unico metodo per distruggere il contratto sulla blockchain 
   modifier onlyOwner {
   require(msg.sender == owner);
   \_;
@@ -141,6 +144,10 @@ qua la funzione destroy viene applicata solo se onlyOwner ritorna true
 
 - Quando una transazione viene completata (con successo o meno), produce una ricevuta della transazione (receipt). La ricevuta della transazione contiene voci di registro che forniscono informazioni sulle azioni che si sono verificate durante l'esecuzione della transazione. gli eventi sono usati per costruire questi logs
   Gli eventi sono particolarmente utili per i client leggeri e i servizi DApp, che possono “osservare” eventi specifici e segnalarli all'interfaccia utente, oppure modificare lo stato dell'applicazione per riflettere un evento in un contratto sottostante.
+- valori che si possono usare per rappresentare soldi sono:
+  1. ether 
+  2. gwei 1 gwei === 1^9 wei
+  3. wei, 1 ether === 1^18 wei
 
 ### key foundry
 
@@ -230,7 +237,7 @@ se si volesse evitare di eseguire sempre questi comandi lunghi per interagire co
 
 **SOLIDITY NON SUPPORTA IL FLOAT**
 
-per ottenere un numero randomico bisogna farsi aiutare da terze parti essendo che blockchain è deterministica è difficile ottener eun numero randomico. Per generare un numero randomico in solidity bisogna inviare un **seed** off-chain ad un oracle che genererà un numero randomico  
+per ottenere un numero randomico bisogna farsi aiutare da terze parti essendo che blockchain è deterministica è difficile ottener eun numero randomico. Per generare un numero randomico in solidity bisogna inviare un **seed** off-chain ad un oracle che genererà un numero randomico
 
 ## TIPI DI ATTACCHI
 
