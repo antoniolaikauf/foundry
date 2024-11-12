@@ -63,7 +63,7 @@ Ti permette di scrivere direttamente codice nel terminale
 
 ## storage
 
-Ogni volta che noi creiamo una variabile viene salvate nello storage, invece le variabili dentro a funzioni non vengono messe dentro allo storage essendo che dopo l'esecuzione della funzione queste vengono eliminate.
+Ogni volta che noi creiamo una variabile viene salvate nello storage, invece le variabili dentro a funzioni non vengono messe dentro allo storage essendo che dopo l'esecuzione della funzione queste vengono eliminate. Le variabili all'interno delle funzioni vengono salvate dentro alla memory
 
 Se si volesse vedere lo storage di un contratto allora si esegue 'forge inspect 'nome contratto' storagelayout', un altro modo sarebbe prima di deploiare il contratto e dopo eseguire cast storage 'address contratto'
 
@@ -128,9 +128,9 @@ una buona pratica è di specificare sempre la visibilità di una funzione
   es
 - delegatecall: permette al altri contratti di leggere e modificare il suo storage. es quando il contratto A chiama B con delegatecall, allora il codice di B viene eseguito come se facesse parte di A e quindi può leggere sia le variabili di A ma può anche modificarle
 - send: invii soldi ad un address
-- transfer: fa lo stesso di send ma se fallisce fa il **revert** cosa che **send non fa** e ritornerà solo false, infatti transfer è più sicura di send essendo che con send devi per forza mettere una condizione se la funzione ha ritornato true 
-- call: altro metodo per inviare i soldi e anche in questo bisogna controllare se ritorna true o no come con send 
-- selfdestruct: unico metodo per distruggere il contratto sulla blockchain 
+- transfer: fa lo stesso di send ma se fallisce fa il **revert** cosa che **send non fa** e ritornerà solo false, infatti transfer è più sicura di send essendo che con send devi per forza mettere una condizione se la funzione ha ritornato true
+- call: altro metodo per inviare i soldi e anche in questo bisogna controllare se ritorna true o no come con send
+- selfdestruct: unico metodo per distruggere il contratto sulla blockchain
   modifier onlyOwner {
   require(msg.sender == owner);
   \_;
@@ -145,16 +145,23 @@ qua la funzione destroy viene applicata solo se onlyOwner ritorna true
 - Quando una transazione viene completata (con successo o meno), produce una ricevuta della transazione (receipt). La ricevuta della transazione contiene voci di registro che forniscono informazioni sulle azioni che si sono verificate durante l'esecuzione della transazione. gli eventi sono usati per costruire questi logs
   Gli eventi sono particolarmente utili per i client leggeri e i servizi DApp, che possono “osservare” eventi specifici e segnalarli all'interfaccia utente, oppure modificare lo stato dell'applicazione per riflettere un evento in un contratto sottostante.
 - valori che si possono usare per rappresentare soldi sono:
-  1. ether 
+  1. ether
   2. gwei 1 gwei === 1^9 wei
   3. wei, 1 ether === 1^18 wei
 - type:
-Es. type Price is uint128;
-type C is V;, where C is the name of the newly introduced type and V has to be a built-in value type 
-queste tipo di variabili scelte dall'user possono avere due funzioni 
-Price.wrap()  che prende il valore (che è un uint128) all'interno e lo fa diventare di tipo Price
-Price.unwrap() che prende un valore di tipo Price e lo ritrasforma di tipo uint128 
-di solito si utilizza questo tipo di semnatica per migliorare la leggibilità e la sicurezza 
+  Es. type Price is uint128;
+  type C is V;, where C is the name of the newly introduced type and V has to be a built-in value type
+  queste tipo di variabili scelte dall'user possono avere due funzioni
+  Price.wrap() che prende il valore (che è un uint128) all'interno e lo fa diventare di tipo Price
+  Price.unwrap() che prende un valore di tipo Price e lo ritrasforma di tipo uint128
+  di solito si utilizza questo tipo di semnatica per migliorare la leggibilità e la sicurezza
+- memory: si utilizza memory con i parametri delle funzioni o array che sono creati dinamicamente durante l'esecuzione della funzione
+- storage: si usa quando si deve salvare dei dati permanentemente
+- calldata: è come memory si utilizza solo per argomenti delle funzioni ma calldata può solo leggere i dati e non può sovrascriverli
+- require: controlla una condizione e se quella condizione è falsa allora fa il revert
+- revert: è uguale al require ma cambia solo la sintassi di scrittura
+- assert: controlla codice che non dovrebbe mai essere falso
+- interface: sono un tipo di contratto che hanno dentro la dichiarazione della funzione ma non l'implementazione [vedi esempio](./ES/solidity2.sol)
 
 ### key foundry
 

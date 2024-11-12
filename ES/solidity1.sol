@@ -6,7 +6,7 @@
 */
 pragma solidity ^0.8.28;
 
-contract Prova_enum {
+contract ProvaEnum {
     enum week_day {
         mondey,
         saturday
@@ -20,7 +20,7 @@ contract Prova_enum {
     }
 }
 
-contract prova_struct {
+contract ProvaStruct {
     struct persona {
         string nome;
         uint8 altezza;
