@@ -281,3 +281,16 @@ per ottenere un numero randomico bisogna farsi aiutare da terze parti essendo ch
 - non dare lo stato di visibilità alle funzioni (essendo che di default è public)
 
 - Solidity ha una variabile globale, tx.origin, che attraversa l'intero stack delle chiamate e contiene l'indirizzo dell'account che ha originariamente inviato la chiamata (o la transazione). L'uso di questa variabile per l'autenticazione in uno smart contract rende il contratto vulnerabile a un attacco di tipo phishing
+
+
+## SICUREZZA
+
+delle pratiche per rendere il codice più sicuro
+
+1. Meno codice, più codice c'è e la probabilità di avere bugs aumenta
+2. Tenere le funzionalità che si possono fare nel front-end nel front-end 
+3. Attenzione ai for loop che possono essere soggetti ai DOS attack, qualsiasi cosa che può causare un spesa di gas illimitato **bisogna cercare di evitarla** 
+4. se ci sono parametri importanti verificare subito la loro validità e non controllarli in mezzo dell'esecuzione o alla fine dell'esecuzione della funzione 
+5. Gestire tutti i casi sopratutto quando si gestisce protocolli con collaterali ecc.
+6. **chiamate esterne** perchè possono portare a manipolazione o exploit 
+7. Mai inviare tutto il gas a uno smart contract inviare solo il **gas limit** 
